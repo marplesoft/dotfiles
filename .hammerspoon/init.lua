@@ -23,6 +23,23 @@ end
 -- End app keys
 -- 
 
+hs.grid.GRIDWIDTH = 4
+hs.grid.GRIDHEIGHT = 4
+hs.grid.MARGINX = 0
+hs.grid.MARGINY = 0
+
+-- Hotkeys to interact with the window grid
+hs.hotkey.bind(hyper, 'g', hs.grid.show)
+hs.hotkey.bind(hyper, 'Left', hs.grid.pushWindowLeft)
+hs.hotkey.bind(hyper, 'Right', hs.grid.pushWindowRight)
+hs.hotkey.bind(hyper, 'Up', hs.grid.pushWindowUp)
+hs.hotkey.bind(hyper, 'Down', hs.grid.pushWindowDown)
+
+hs.urlevent.bind('hypershiftleft', function() hs.grid.resizeWindowThinner(hs.window.focusedWindow()) end)
+hs.urlevent.bind('hypershiftright', function() hs.grid.resizeWindowWider(hs.window.focusedWindow()) end)
+hs.urlevent.bind('hypershiftup', function() hs.grid.resizeWindowShorter(hs.window.focusedWindow()) end)
+hs.urlevent.bind('hypershiftdown', function() hs.grid.resizeWindowTaller(hs.window.focusedWindow()) end)
+
 --
 -- Begin window movement
 hs.window.animationDuration = 0
