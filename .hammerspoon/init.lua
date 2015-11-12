@@ -1,7 +1,6 @@
 local hyper = {"cmd", "alt", "ctrl", "shift"}
 
---
--- Begin app keys
+-- App shortcut hotkeys
 local appKeys = {
     O = "Microsoft Outlook",
     B = "Sublime Text",
@@ -15,35 +14,32 @@ local appKeys = {
     P = "TaskPaper",
     Y = "Colloquy"
 }
-
 for key, app in pairs(appKeys) do
     hs.hotkey.bind(hyper, key, function()
         hs.application.launchOrFocus(app)
     end)
 end
--- End app keys
--- 
 
+-- make window moves quick
+hs.window.animationDuration = 0
+
+-- window grid stuff
 hs.grid.GRIDWIDTH = 4
 hs.grid.GRIDHEIGHT = 4
 hs.grid.MARGINX = 0
 hs.grid.MARGINY = 0
 
 -- Hotkeys to interact with the window grid
-hs.hotkey.bind(hyper, 'g', hs.grid.show)
 hs.hotkey.bind(hyper, 'Left', hs.grid.pushWindowLeft)
 hs.hotkey.bind(hyper, 'Right', hs.grid.pushWindowRight)
 hs.hotkey.bind(hyper, 'Up', hs.grid.pushWindowUp)
 hs.hotkey.bind(hyper, 'Down', hs.grid.pushWindowDown)
 
+-- Quasi-hotkeys (via URL events) for resizing of windows in the grid
 hs.urlevent.bind('hypershiftleft', function() hs.grid.resizeWindowThinner(hs.window.focusedWindow()) end)
 hs.urlevent.bind('hypershiftright', function() hs.grid.resizeWindowWider(hs.window.focusedWindow()) end)
 hs.urlevent.bind('hypershiftup', function() hs.grid.resizeWindowShorter(hs.window.focusedWindow()) end)
 hs.urlevent.bind('hypershiftdown', function() hs.grid.resizeWindowTaller(hs.window.focusedWindow()) end)
-
---
--- Begin window movement
-hs.window.animationDuration = 0
 
 function moveWindowTo(window, x, y, w, h) 
     window:moveToUnit(hs.geometry.rect(x, y, w, h))
@@ -53,6 +49,7 @@ function moveCurrentWindowTo(x, y, w, h)
     moveWindowTo(hs.window.focusedWindow(), x, y, w, h)
 end
 
+-- move windows between spaces
 function moveWindowOneSpace(direction)
     local mouseOrigin = hs.mouse.getAbsolutePosition()
     local win = hs.window.focusedWindow()
@@ -80,49 +77,21 @@ function moveWindowOneSpace(direction)
     hs.mouse.setAbsolutePosition(mouseOrigin)
 end
 
+hs.hotkey.bind(hyper, "1", function() moveWindowOneSpace("left") end)   -- move left one space
+hs.hotkey.bind(hyper, "2", function() moveWindowOneSpace("right") end)  -- move right one space
+
 hs.hotkey.bind(hyper, "=", function() moveCurrentWindowTo(0.0, 0.0, 1.0, 1.0) end)  -- full screen
 hs.hotkey.bind(hyper, "[", function() moveCurrentWindowTo(0.0, 0.0, 0.5, 1.0) end)  -- left half
 hs.hotkey.bind(hyper, "]", function() moveCurrentWindowTo(0.5, 0.0, 0.5, 1.0) end)  -- right helf
 hs.hotkey.bind(hyper, "-", function() moveCurrentWindowTo(0.2, 0.0, 0.6, 1.0) end)  -- right helf
-hs.hotkey.bind(hyper, "9", function() moveCurrentWindowTo(0.0, 0.0, 0.7, 1.0) end)  -- left 70%
-hs.hotkey.bind(hyper, "0", function() moveCurrentWindowTo(0.7, 0.0, 0.3, 1.0) end)  -- right 30%
 
-hs.hotkey.bind(hyper, "1", function() moveWindowOneSpace("left") end)   -- move left one space
-hs.hotkey.bind(hyper, "2", function() moveWindowOneSpace("right") end)  -- move right one space
--- End window movement
---
-
---
--- Begin custom layouts
-function getApp(name)
-    local app = hs.application.get(name)
-    if app == nil then
-        app = hs.application.open(name, 3, true)
-    elseif app:mainWindow() == nil then
-        hs.activate()
-    end
-    return app
-end
-
-hs.hotkey.bind(hyper, "Z", function()
-    hs.application.open("Microsoft Outlook", 3, true):mainWindow():setFrame(hs.geometry.rect(0.0,23.0,1397.0,884.0))
-    hs.application.open("TaskPaper", 3, true):mainWindow():setFrame(hs.geometry.rect(0.0,913.0,642.0,523.0))
-    hs.application.open("My Day", 3, true):allWindows()[1]:setFrame(hs.geometry.rect(646.0,913.0,298.0,525.0))
-    hs.application.open("TextEdit", 3, true):mainWindow():setFrame(hs.geometry.rect(948.0,914.0,450.0,527.0))
-    hs.application.open("Slack", 3, true):mainWindow():setFrame(hs.geometry.rect(1404.0,23.0,1112.0,1417.0))     
-end)
---
--- End custom layouts
-
---
--- Begin other bindings
+-- reload hs config hotkey
 hs.hotkey.bind(hyper, "`", function()
     hs.reload()
     hs.alert.show("Hammerspoon reloaded")
 end)
 
+-- edit init.lua hotkey
 hs.hotkey.bind(hyper, ";", function()
     hs.execute("/usr/local/bin/subl ~/.hammerspoon/init.lua")
 end)
--- End other bindings
---
