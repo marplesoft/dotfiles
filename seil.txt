@@ -1,0 +1,1 @@
+Enable "Change the caps lock key" and set to keycode 80 (which is f19)

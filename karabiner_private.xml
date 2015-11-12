@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<root>
+
+    <replacementdef>
+        <replacementname>HYPER</replacementname>
+        <replacementvalue>COMMAND_R, ModifierFlag::OPTION_R | ModifierFlag::SHIFT_R | ModifierFlag::CONTROL_R | ModifierFlag::NONE</replacementvalue>
+    </replacementdef>
+
+    <vkopenurldef>
+        <name>KeyCode::VK_OPEN_URL_HS_hypershiftup</name>
+        <url>hammerspoon://hypershiftup</url>
+        <background/>
+    </vkopenurldef>
+
+    <vkopenurldef>
+        <name>KeyCode::VK_OPEN_URL_HS_hypershiftdown</name>
+        <url>hammerspoon://hypershiftdown</url>
+        <background/>
+    </vkopenurldef>
+    
+    <vkopenurldef>
+        <name>KeyCode::VK_OPEN_URL_HS_hypershiftleft</name>
+        <url>hammerspoon://hypershiftleft</url>
+        <background/>
+    </vkopenurldef>
+    
+    <vkopenurldef>
+        <name>KeyCode::VK_OPEN_URL_HS_hypershiftright</name>
+        <url>hammerspoon://hypershiftright</url>
+        <background/>
+    </vkopenurldef>
+
+    <item>
+        <name>Remap F19 to Hyper</name>
+        <appendix>OS X doesn't have a Hyper. This maps F19 to Control + Shift + Option + Command.</appendix>
+        <identifier>usercustom.f19_to_hyper</identifier>
+        <autogen>
+            --KeyToKey--
+            KeyCode::F19,
+            KeyCode::{{ HYPER }}
+        </autogen>
+    </item>
+
+    <item>
+        <name>Remap Hyper-SHIFT_L-Arrows to Hammerspoon URL events</name>
+        <identifier>usercustom.hyper_shiftl_arrows_to_url_events</identifier>
+        <autogen>
+            --KeyToKey--
+            KeyCode::CURSOR_LEFT, ModifierFlag::SHIFT_L | ModifierFlag::{{ HYPER }},
+            KeyCode::VK_OPEN_URL_HS_hypershiftleft
+        </autogen>
+        <autogen>
+            --KeyToKey--
+            KeyCode::CURSOR_RIGHT, ModifierFlag::SHIFT_L | ModifierFlag::{{ HYPER }},
+            KeyCode::VK_OPEN_URL_HS_hypershiftright
+        </autogen>
+        <autogen>
+            --KeyToKey--
+            KeyCode::CURSOR_UP, ModifierFlag::SHIFT_L | ModifierFlag::{{ HYPER }},
+            KeyCode::VK_OPEN_URL_HS_hypershiftup
+        </autogen>
+        <autogen>
+            --KeyToKey--
+            KeyCode::CURSOR_DOWN, ModifierFlag::SHIFT_L | ModifierFlag::{{ HYPER }},
+            KeyCode::VK_OPEN_URL_HS_hypershiftdown
+        </autogen>
+    </item>
+</root>
