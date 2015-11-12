@@ -12,7 +12,8 @@ local appKeys = {
     L = "Slack",
     T = "Terminal",
     W = "Microsoft Word",
-    P = "TaskPaper"
+    P = "TaskPaper",
+    Y = "Colloquy"
 }
 
 for key, app in pairs(appKeys) do
