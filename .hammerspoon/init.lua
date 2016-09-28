@@ -1,5 +1,4 @@
-local hyper = {"cmd", "alt", "ctrl", "shift"}
-local uber = {"cmd", "alt", "fn", "shift"}
+local hyper = {"cmd", "alt", "ctrl"}
 
 -- App shortcut hotkeys
 local appKeys = {
@@ -10,7 +9,7 @@ local appKeys = {
     X = "Microsoft Excel",
     F = "Finder",
     L = "Slack",
-    T = "Terminal",
+    T = "iTerm",
     W = "Microsoft Word",
     P = "TaskPaper",
     N = "Notes"
@@ -20,10 +19,6 @@ for key, app in pairs(appKeys) do
         hs.application.launchOrFocus(app)
     end)
 end
-
-hs.hotkey.bind(uber, "T", function()
-	hs.application.launchOrFocus("Atom")
-end)
 
 -- make window moves quick
 hs.window.animationDuration = 0
